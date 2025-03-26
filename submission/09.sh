@@ -220,7 +220,7 @@ check_cmd "Transaction decoding" "DECODED_TX" "$DECODED_TX"
 VERIFY_RBF=$(echo $DECODED_TX | jq '[.vin[].sequence < 4294967294] | any')
 check_cmd "RBF verification" "VERIFY_RBF" "$VERIFY_RBF"
 
-VERIFY_PAYMENT=$(echo $DECODED_TX | jq '.vout | [0] | .value')
+VERIFY_PAYMENT=$(echo $DECODED_TX | jq '.vout | .[0] | .value')
 check_cmd "Payment verification" "VERIFY_PAYMENT" "$VERIFY_PAYMENT"
 
 VERIFY_CHANGE=$(echo $DECODED_TX | jq '.vout | .[1] | .value')
