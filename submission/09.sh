@@ -91,7 +91,7 @@ UTXO_TXID=$TXID
 UTXO_VOUT_INDEX=$(bitcoin-cli -regtest decoderawtransaction $BASE_TX | jq -r '.vout | .[0] | .n')
 check_cmd "UTXO vout selection" "UTXO_VOUT_INDEX" "$UTXO_VOUT_INDEX"
 
-UTXO_VALUE=$( )
+UTXO_VALUE=$(bitcoin-cli -regtest decoderawtransaction $BASE_TX | jq -r '.vout | .[0] | .value' | awk '{s += $1 * 100000000} END {printf "%.0f\n", s}')
 check_cmd "UTXO value extraction" "UTXO_VALUE" "$UTXO_VALUE"
 
 echo "Selected UTXO:"
