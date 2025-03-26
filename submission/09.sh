@@ -220,10 +220,10 @@ check_cmd "Transaction decoding" "DECODED_TX" "$DECODED_TX"
 VERIFY_RBF=$(bitcoin-cli -regtest decoderawtransaction $DECODED_TX | jq '[.vin[].sequence < 4294967294] | any')
 check_cmd "RBF verification" "VERIFY_RBF" "$VERIFY_RBF"
 
-VERIFY_PAYMENT=$(bitcoin-cli -regtest decoderawtransaction $DECODED_TX | jq '.vout[] | select(.scriptPubKey.addresses[0]')
+VERIFY_PAYMENT=$(bitcoin-cli -regtest decoderawtransaction $DECODED_TX | jq '.vout[] | select(.scriptPubKey.addresses[0])')
 check_cmd "Payment verification" "VERIFY_PAYMENT" "$VERIFY_PAYMENT"
 
-VERIFY_CHANGE=$(bitcoin-cli -regtest decoderawtransaction $DECODED_TX | jq '.vout[] | select(.scriptPubKey.addresses[1]')
+VERIFY_CHANGE=$(bitcoin-cli -regtest decoderawtransaction $DECODED_TX | jq '.vout[] | select(.scriptPubKey.addresses[1])')
 check_cmd "Change verification" "VERIFY_CHANGE" "$VERIFY_CHANGE"
 
 echo "Verification Results:"
