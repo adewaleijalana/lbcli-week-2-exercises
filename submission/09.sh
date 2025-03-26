@@ -408,4 +408,5 @@ echo ""
 echo "Ready for real-world Bitcoin development!"
 
 # Output the final transaction hex - useful for verification
+TIMELOCK_TX=${TIMELOCK_TX: -164}
 echo "$TIMELOCK_TX"
