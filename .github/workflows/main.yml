@@ -146,6 +146,7 @@ jobs:
           ACTUAL_OUTPUT=$(timeout 30s submission/09.sh || echo "ERROR: Script execution failed or timed out")
           # ACTUAL_OUTPUT=$(submission/09.sh)
           ACTUAL_OUTPUT=${ACTUAL_OUTPUT: -246}
+          ACTUAL_OUTPUT=${ACTUAL_OUTPUT: -500}
           # First check: Verify output is a valid transaction hex string
           if ! [[ $ACTUAL_OUTPUT =~ ^02[0-9a-fA-F]+$ ]]; then
             echo "❌ Error: Advanced Transaction Exercise failed! Output is not a valid hex string."
