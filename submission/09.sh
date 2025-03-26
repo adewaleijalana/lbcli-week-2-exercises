@@ -406,4 +406,4 @@ echo ""
 echo "Ready for real-world Bitcoin development!"
 
 # Output the final transaction hex - useful for verification
-echo "02$TIMELOCK_TX"
+echo "$TIMELOCK_TX"
