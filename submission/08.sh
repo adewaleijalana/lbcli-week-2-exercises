@@ -15,6 +15,6 @@ utxo_vout_2=$(bitcoin-cli -regtest decoderawtransaction $raw_tx | jq -r '.vout |
 
 utxo_vout_2_value=$(bitcoin-cli -regtest decoderawtransaction $raw_tx | jq -r '.vout | .[1] | .value' )
 
-new_raw_tx_hex=$(bitcoin-cli -regtest -named createrawtransaction inputs='''[ { "txid": "'$txn_id'", "vout": '$utxo_vout_1',  "sequence": 1 }, { "txid": "'$txn_id'", "vout": '$utxo_vout_2' } ]''' outputs='''{ "'$receipient'": 0.20000000 }''')
+new_raw_tx_hex=$(bitcoin-cli -regtest -named createrawtransaction inputs='''[ { "txid": "'$txn_id'", "vout": '$utxo_vout_1',  "sequence": 1 }, { "txid": "'$txn_id'", "vout": '$utxo_vout_2', "sequence": 1 } ]''' outputs='''{ "'$receipient'": 0.20000000 }''')
 
 echo "$new_raw_tx_hex"
