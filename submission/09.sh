@@ -67,7 +67,7 @@ echo "Number of outputs: $NUM_OUTPUTS"
 
 # STUDENT TASK: Extract the value of the first output in satoshis
 # WRITE YOUR SOLUTION BELOW:
-FIRST_OUTPUT_VALUE=$(bitcoin-cli -regtest decoderawtransaction $BASE_TX | jq -r '.vout | .[0] | .value' | awk '{s += $1 * 100000000} END {print s}')
+FIRST_OUTPUT_VALUE=$(bitcoin-cli -regtest decoderawtransaction $BASE_TX | jq -r '.vout | .[0] | .value' | awk '{s += $1 * 100000000} END {print s}' | bc)
 check_cmd "Output value extraction" "FIRST_OUTPUT_VALUE" "$FIRST_OUTPUT_VALUE"
 
 echo "First output value: $FIRST_OUTPUT_VALUE satoshis"
@@ -91,7 +91,7 @@ UTXO_TXID=$TXID
 UTXO_VOUT_INDEX=$(bitcoin-cli -regtest decoderawtransaction $BASE_TX | jq -r '.vout | .[0] | .n')
 check_cmd "UTXO vout selection" "UTXO_VOUT_INDEX" "$UTXO_VOUT_INDEX"
 
-UTXO_VALUE=$(bitcoin-cli -regtest decoderawtransaction $BASE_TX | jq -r '.vout | .[0] | .value' | awk '{s += $1 * 100000000} END {print s}')
+UTXO_VALUE=$( )
 check_cmd "UTXO value extraction" "UTXO_VALUE" "$UTXO_VALUE"
 
 echo "Selected UTXO:"
