@@ -101,9 +101,9 @@ check_cmd "UTXO value extraction" "UTXO_VALUE" "$UTXO_VALUE"
 
 # Validate selection
 if [ "$UTXO_VALUE" -ge 15000000 ]; then
-  # echo "✅ This UTXO is sufficient for spending 15,000,000 satoshis!"
+  echo "✅ This UTXO is sufficient for spending 15,000,000 satoshis!"
 else
-  # echo "❌ Selected UTXO doesn't have enough funds! Need at least 15,000,000 satoshis."
+  echo "❌ Selected UTXO doesn't have enough funds! Need at least 15,000,000 satoshis."
   exit 1
 fi
 
@@ -142,7 +142,7 @@ check_cmd "Fee calculation" "FEE_SATS" "$FEE_SATS"
 
 # For this exercise, we're checking if the fee is in a reasonable range
 if [ "$FEE_SATS" -lt 1000 ] || [ "$FEE_SATS" -gt 5000 ]; then
-  # echo "⚠️ Warning: Fee seems unusual. Double-check your calculation."
+  echo "⚠️ Warning: Fee seems unusual. Double-check your calculation."
 else
   echo "✅ Fee amount seems reasonable!"
 fi
@@ -174,7 +174,7 @@ check_cmd "Input JSON creation" "TX_INPUTS" "$TX_INPUTS"
 
 # Verify RBF is enabled in the input structure
 if [[ "$TX_INPUTS" == *"sequence"* ]] && [[ "$TX_INPUTS" != *"4294967295"* ]]; then
-  # echo "✅ RBF appears to be enabled!"
+  echo "✅ RBF appears to be enabled!"
 else
   echo "⚠️ Warning: RBF might not be properly enabled. Check your sequence number."
 fi
@@ -233,7 +233,7 @@ check_cmd "Change verification" "VERIFY_CHANGE" "$VERIFY_CHANGE"
 
 # Final verification
 if [ "$VERIFY_RBF" == "true" ] && [ "$VERIFY_PAYMENT" == "$PAYMENT_BTC" ] && [ "$VERIFY_CHANGE" == "$CHANGE_BTC" ]; then
-  # echo "✅ Transaction looks good! Ready for signing."
+  echo "✅ Transaction looks good! Ready for signing."
 else
   echo "❌ Transaction verification failed! Double-check your transaction."
   exit 1
@@ -266,7 +266,7 @@ check_cmd "Simple transaction creation" "SIMPLE_RAW_TX" "$SIMPLE_RAW_TX"
 
 # Check if the transaction is properly created
 if [[ -n "$SIMPLE_RAW_TX" && "$SIMPLE_RAW_TX" =~ ^02[0-9a-fA-F]+$ ]]; then
-  # echo "✅ Transaction is properly created!"
+  echo "✅ Transaction is properly created!"
 else
   echo "❌ Transaction creation verification failed!"
   exit 1
