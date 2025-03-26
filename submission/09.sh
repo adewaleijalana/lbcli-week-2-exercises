@@ -377,7 +377,7 @@ TIMELOCK_OUTPUTS='{"'$TIMELOCK_ADDRESS'" : '$TIMELOCK_BTC'}'
 check_cmd "Timelock output creation" "TIMELOCK_OUTPUTS" "$TIMELOCK_OUTPUTS"
 
 # STUDENT TASK: Create the raw transaction with timelock
-TIMELOCK_TX=$(bitcoin-cli -regtest -named createrawtransaction inputs="$TIMELOCK_INPUTS" outputs="$TIMELOCK_OUTPUTS" | tr -d '\n')
+TIMELOCK_TX=$(bitcoin-cli -regtest -named createrawtransaction inputs="$TIMELOCK_INPUTS" outputs="$TIMELOCK_OUTPUTS")
 check_cmd "Timelock transaction creation" "TIMELOCK_TX" "$TIMELOCK_TX"
 
 echo "Successfully created transaction with 10-block relative timelock!"
@@ -405,4 +405,5 @@ echo ""
 echo "Ready for real-world Bitcoin development!"
 
 # Output the final transaction hex - useful for verification
+TIMELOCK_TX=$(echo "$TIMELOCK_TX" | tr -d '\n' | tr -d '\r' | tr -d '\0')
 echo "$TIMELOCK_TX"
