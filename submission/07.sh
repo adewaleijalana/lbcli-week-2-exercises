@@ -6,9 +6,9 @@ receipient="2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP"
 
 txn_id=$(bitcoin-cli -regtest decoderawtransaction $raw_tx | jq -r '.txid')
 
-echo $txn_id
+# echo $txn_id
 
-echo "getting the the vout....."
+# echo "getting the the vout....."
 
 utxo_vout_1=$(bitcoin-cli -regtest decoderawtransaction $raw_tx | jq -r '.vout | .[0] | .n' )
 
