@@ -6,4 +6,4 @@ bitcoin-cli -regtest generatetoaddress 101 $address
 sleep 1
 
 # Return only the Address
-echo $address
+echo "$address"
