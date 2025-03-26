@@ -355,7 +355,9 @@ echo "Secondary transaction ID: $SECONDARY_TXID"
 
 # STUDENT TASK: Create the input JSON structure with a 10-block relative timelock
 # WRITE YOUR SOLUTION BELOW:
-TIMELOCK_INPUTS='[{"txid" : "'$SECONDARY_TXID'", "vout" : 0, "sequence" : 10}, {"txid" : "'$SECONDARY_TXID'", "vout" : 1, "sequence" : 10}]'
+# TIMELOCK_INPUTS='[{"txid" : "'$SECONDARY_TXID'", "vout" : 0, "sequence" : 10}, {"txid" : "'$SECONDARY_TXID'", "vout" : 1, "sequence" : 10}]'
+
+TIMELOCK_INPUTS=$(jq -n --arg txid "$SECONDARY_TXID" '[{"txid": $txid, "vout": 0, "sequence": 10}, {"txid": $txid, "vout": 1, "sequence": 10}]')
 
 # Recipient address for timelock funds
 TIMELOCK_ADDRESS="bcrt1qxhy8dnae50nwkg6xfmjtedgs6augk5edj2tm3e"
@@ -373,7 +375,8 @@ check_cmd "Timelock amount calculation" "TIMELOCK_AMOUNT" "$TIMELOCK_AMOUNT"
 TIMELOCK_BTC=$(echo $TIMELOCK_AMOUNT | awk '{s += $1 / 100000000} END {print s}')
 
 # STUDENT TASK: Create the outputs JSON structure
-TIMELOCK_OUTPUTS='{"'$TIMELOCK_ADDRESS'" : '$TIMELOCK_BTC'}'
+# TIMELOCK_OUTPUTS='{"'$TIMELOCK_ADDRESS'" : '$TIMELOCK_BTC'}'
+TIMELOCK_OUTPUTS=$(jq -n --arg addr "$TIMELOCK_ADDRESS" --argjson btc "$TIMELOCK_BTC" '{($addr): $btc}')
 check_cmd "Timelock output creation" "TIMELOCK_OUTPUTS" "$TIMELOCK_OUTPUTS"
 
 # STUDENT TASK: Create the raw transaction with timelock
@@ -405,5 +408,4 @@ echo ""
 echo "Ready for real-world Bitcoin development!"
 
 # Output the final transaction hex - useful for verification
-TIMELOCK_TX=$(echo "$TIMELOCK_TX" | tr -d '\n' | tr -d '\r' | tr -d '\0')
 echo "$TIMELOCK_TX"
