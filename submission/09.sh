@@ -168,7 +168,7 @@ PAYMENT_ADDRESS="2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP"
 CHANGE_ADDRESS="bcrt1qg09ftw43jvlhj4wlwwhkxccjzmda3kdm4y83ht"
 
 # STUDENT TASK: Create a proper input JSON for createrawtransaction
-TX_INPUTS="[{"txid":"$UTXO_TXID", "vout":$UTXO_VOUT_INDEX, "sequence": 1}]"
+TX_INPUTS="[{\"txid\":\"$UTXO_TXID\", \"vout\":$UTXO_VOUT_INDEX, \"sequence\": 1}]"
 check_cmd "Input JSON creation" "TX_INPUTS" "$TX_INPUTS"
 
 # Verify RBF is enabled in the input structure
@@ -188,7 +188,7 @@ PAYMENT_BTC=$(echo $PAYMENT_AMOUNT | awk '{s += $1 / 100000000} END {print s}')
 CHANGE_BTC=$(echo $CHANGE_AMOUNT | awk '{s += $1 / 100000000} END {print s}')
 
 # STUDENT TASK: Create the outputs JSON structure
-TX_OUTPUTS="{"$PAYMENT_ADDRESS" : "$PAYMENT_BTC", "$CHANGE_ADDRESS" : $CHANGE_AMOUNT}"
+TX_OUTPUTS="{\"$PAYMENT_ADDRESS\" : "$PAYMENT_BTC", \"$CHANGE_ADDRESS\" : $CHANGE_AMOUNT}"
 check_cmd "Output JSON creation" "TX_OUTPUTS" "$TX_OUTPUTS"
 
 # STUDENT TASK: Create the raw transaction
