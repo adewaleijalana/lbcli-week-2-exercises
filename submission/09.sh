@@ -352,18 +352,18 @@ echo "Secondary transaction ID: $SECONDARY_TXID"
 
 # STUDENT TASK: Create the input JSON structure with a 10-block relative timelock
 # WRITE YOUR SOLUTION BELOW:
-TIMELOCK_INPUTS='[{"txid" : "'$PARENT_TXID'", "vout" : 0, "sequence" : 10}, {"txid" : "'$PARENT_TXID'", "vout" : 1, "sequence" : 10}]'
+TIMELOCK_INPUTS='[{"txid" : "'$SECONDARY_TXID'", "vout" : 0, "sequence" : 10}, {"txid" : "'$SECONDARY_TXID'", "vout" : 1, "sequence" : 10}]'
 
 # Recipient address for timelock funds
 TIMELOCK_ADDRESS="bcrt1qxhy8dnae50nwkg6xfmjtedgs6augk5edj2tm3e"
 
 # STUDENT TASK: Calculate the amount to send (use the output value from SECONDARY_TX, minus a fee)
 # Hint: Extract the output value from the secondary TX first
-SECONDARY_OUTPUT_VALUE=$(bitcoin-cli -regtest decoderawtransaction "$SECONDARY_TX" | jq '[.vout[].value] | add' | awk '{s += $1 * 100000000} END {printf "%.0f\n", s}')
+SECONDARY_OUTPUT_VALUE=$(bitcoin-cli -regtest decoderawtransaction $SECONDARY_TX | jq '[.vout[].value] | add' | awk '{s += $1 * 100000000} END {printf "%.0f\n", s}')
 check_cmd "Secondary output value extraction" "SECONDARY_OUTPUT_VALUE" "$SECONDARY_OUTPUT_VALUE"
 
 TIMELOCK_FEE=1000 # Use a simple fee of 1000 satoshis for this exercise
-TIMELOCK_AMOUNT=$(($TOTAL_OUTPUT - $TIMELOCK_FEE))
+TIMELOCK_AMOUNT=$(($SECONDARY_OUTPUT_VALUE - $TIMELOCK_FEE))
 check_cmd "Timelock amount calculation" "TIMELOCK_AMOUNT" "$TIMELOCK_AMOUNT"
 
 # Convert to BTC
