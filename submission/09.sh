@@ -185,11 +185,11 @@ CHANGE_AMOUNT=$(($UTXO_VALUE - $PAYMENT_AMOUNT - $FEE_SATS))
 check_cmd "Change calculation" "CHANGE_AMOUNT" "$CHANGE_AMOUNT"
 
 # Convert amounts to BTC for createrawtransaction
-PAYMENT_BTC=$(echo $PAYMENT_AMOUNT | awk '{s += $1 / 100000000} END {print s}')
-CHANGE_BTC=$(echo $CHANGE_AMOUNT | awk '{s += $1 / 100000000} END {print s}')
+PAYMENT_BTC=$(echo $PAYMENT_AMOUNT | awk '{s += $1 / 100000000} END {printf "%.8f\n", s}')
+CHANGE_BTC=$(echo $CHANGE_AMOUNT | awk '{s += $1 / 100000000} END {printf "%.8f\n", s}')
 
 # STUDENT TASK: Create the outputs JSON structure
-TX_OUTPUTS=$(jq -n --arg addr1 "$PAYMENT_ADDRESS" --argjson amount1 "$PAYMENT_BTC" --arg addr2 "$CHANGE_ADDRESS" --argjson amount2 "$CHANGE_AMOUNT" '{($addr1): $amount1, ($addr2): $amount2}')
+TX_OUTPUTS=$(jq -n --arg addr1 "$PAYMENT_ADDRESS" --argjson amount1 "$PAYMENT_BTC" --arg addr2 "$CHANGE_ADDRESS" --argjson amount2 "$CHANGE_BTC" '{($addr1): $amount1, ($addr2): $amount2}')
 
 check_cmd "Output JSON creation" "TX_OUTPUTS" "$TX_OUTPUTS"
 
@@ -300,7 +300,10 @@ check_cmd "Change output identification" "CHANGE_OUTPUT_INDEX" "$CHANGE_OUTPUT_I
 
 # STUDENT TASK: Create the input JSON structure for the child transaction
 # WRITE YOUR SOLUTION BELOW:
-CHILD_INPUTS='[{"txid" : "'$PARENT_TXID'", "vout" : "'$CHANGE_OUTPUT_INDEX'"}]'
+CHILD_INPUTS='[{"txid" : "'$PARENT_TXID'", "vout" : '$CHANGE_OUTPUT_INDEX'}]'
+
+echo "CHILD_INPUTS: $CHILD_INPUTS"
+
 check_cmd "Child input creation" "CHILD_INPUTS" "$CHILD_INPUTS"
 
 # STUDENT TASK: Calculate fees, allowing for a high fee to help the parent transaction
@@ -313,7 +316,7 @@ check_cmd "Child fee calculation" "CHILD_FEE_SATS" "$CHILD_FEE_SATS"
 
 # Calculate the amount to send after deducting fee
 CHILD_RECIPIENT="2MvM2nZjueT9qQJgZh7LBPoudS554B6arQc"
-CHILD_SEND_AMOUNT=$(($VERIFY_CHANGE - $CHILD_FEE_SATS))
+CHILD_SEND_AMOUNT=$(($CHANGE_AMOUNT - $CHILD_FEE_SATS))
 check_cmd "Child amount calculation" "CHILD_SEND_AMOUNT" "$CHILD_SEND_AMOUNT"
 
 # Convert to BTC
