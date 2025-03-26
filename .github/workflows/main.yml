@@ -144,6 +144,7 @@ jobs:
           echo "Running exercise 09 script..."
           # Run the script with a timeout to handle potential infinite loops
           ACTUAL_OUTPUT=$(timeout 30s submission/09.sh || echo "ERROR: Script execution failed or timed out")
+          echo "debugging ACTUAL_OUTPUT: $ACTUAL_OUTPUT"
           # ACTUAL_OUTPUT=${ACTUAL_OUTPUT: -164}
           # First check: Verify output is a valid transaction hex string
           if ! [[ $ACTUAL_OUTPUT =~ ^02[0-9a-fA-F]+$ ]]; then
