@@ -355,7 +355,9 @@ echo "Secondary transaction ID: $SECONDARY_TXID"
 # WRITE YOUR SOLUTION BELOW:
 # TIMELOCK_INPUTS='[{"txid" : "'$SECONDARY_TXID'", "vout" : 0, "sequence" : 10}, {"txid" : "'$SECONDARY_TXID'", "vout" : 1, "sequence" : 10}]'
 
-TIMELOCK_INPUTS=$(jq -n --arg txid "$SECONDARY_TXID" '[{"txid": $txid, "vout": 0, "sequence": 10}, {"txid": $txid, "vout": 1, "sequence": 10}]')
+# TIMELOCK_INPUTS=$(jq -n --arg txid "$SECONDARY_TXID" '[{"txid": $txid, "vout": 0, "sequence": 10}, {"txid": $txid, "vout": 1, "sequence": 10}]')
+
+TIMELOCK_INPUTS=$(jq -n --arg txid "$SECONDARY_TXID" '[{"txid": $txid, "vout": 0, "sequence": 10}]')
 
 # Recipient address for timelock funds
 TIMELOCK_ADDRESS="bcrt1qxhy8dnae50nwkg6xfmjtedgs6augk5edj2tm3e"
