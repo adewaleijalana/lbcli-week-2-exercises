@@ -252,6 +252,7 @@ echo ""
 
 # For this exercise, we'll create a simple transaction
 # This is a simplified example for educational purposes
+
 echo "Creating a simple transaction for signing..."
 
 # STUDENT TASK: Create a simple transaction that sends funds to the test address
@@ -301,7 +302,6 @@ check_cmd "Change output identification" "CHANGE_OUTPUT_INDEX" "$CHANGE_OUTPUT_I
 # STUDENT TASK: Create the input JSON structure for the child transaction
 # WRITE YOUR SOLUTION BELOW:
 CHILD_INPUTS='[{"txid" : "'$PARENT_TXID'", "vout" : '$CHANGE_OUTPUT_INDEX'}]'
-
 check_cmd "Child input creation" "CHILD_INPUTS" "$CHILD_INPUTS"
 
 # STUDENT TASK: Calculate fees, allowing for a high fee to help the parent transaction
